@@ -19,12 +19,10 @@ class ListFragment : Fragment(), RecViewAdapter.AdapterListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
         // Recycler View
-
         val myrecycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
 
         val exampleList = generateDummyList(9)
@@ -32,7 +30,6 @@ class ListFragment : Fragment(), RecViewAdapter.AdapterListener {
         myrecycler_view.adapter = RecViewAdapter(exampleList, this)
         myrecycler_view.layoutManager = LinearLayoutManager(context)
         myrecycler_view.setHasFixedSize(true)
-
 
         return view
     }
