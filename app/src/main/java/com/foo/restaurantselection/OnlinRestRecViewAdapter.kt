@@ -3,16 +3,25 @@ package com.foo.restaurantselection
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import androidx.recyclerview.widget.RecyclerView
 import com.foo.restaurantselection.model.Restaurant
 import com.foo.restaurantselection.utils.load
 import kotlinx.android.synthetic.main.rec_view_item.view.*
 
-class OnlinRestRecViewAdapter : RecyclerView.Adapter<OnlinRestRecViewAdapter.ShowData>() {
+class OnlinRestRecViewAdapter(private val listener: AdapterListener) : RecyclerView.Adapter<OnlinRestRecViewAdapter.ShowData>() {
 
     private var restData: List<Restaurant> = listOf()
 
-    inner class ShowData(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ShowData(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            listener.onClick(restData[adapterPosition])
+        }
 
     }
 
@@ -37,6 +46,10 @@ class OnlinRestRecViewAdapter : RecyclerView.Adapter<OnlinRestRecViewAdapter.Sho
     fun setData(data: List<Restaurant>) {
         restData = data
         notifyDataSetChanged()
+    }
+
+    interface AdapterListener{
+        fun onClick(rec_view_item : Restaurant)
     }
 
 }
