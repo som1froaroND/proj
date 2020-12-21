@@ -28,8 +28,9 @@ class ProfileFragment : Fragment(), RecViewAdapter.AdapterListener {
         val exampleList = generateDummyList(2)
 
         myFavRecycler_view.adapter = RecViewAdapter(exampleList, this)
+        //myFavRecycler_view.adapter = OnlinRestRecViewAdapter()
         myFavRecycler_view.layoutManager = LinearLayoutManager(context)
-        myFavRecycler_view.setHasFixedSize(true)
+//        myFavRecycler_view.setHasFixedSize(true)
   //  */
 
         return view
@@ -49,9 +50,41 @@ class ProfileFragment : Fragment(), RecViewAdapter.AdapterListener {
         return list
     }
 
+
+    override fun onClick(rec_view_item: RecViewItem) {
+        Log.d("Clicked ", rec_view_item.text1)
+
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDetailFragment(rec_view_item,null,null))
+    }
+
+    /*
     override fun onClick(rec_view_item: RecViewItem) {
         Log.d("Clicked ", rec_view_item.text1)
 
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDetailFragment(rec_view_item))
     }
+
+
+    override fun onClick(rec_view_item: RecViewItemRest) {
+        Log.d("Clicked ", rec_view_item.text1)
+
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDetailFragment(
+            RecViewItem(R.drawable.ic_android, rec_view_item.name, rec_view_item.address),
+            rec_view_item,
+            RecViewItemRest(R.drawable.ic_android,
+                rec_view_item.name,
+                rec_view_item.address,
+                rec_view_item.city,
+                rec_view_item.state,
+                rec_view_item.area,
+                rec_view_item.postal_code,
+                rec_view_item.country,
+                rec_view_item.phone ,
+                rec_view_item.lat,
+                rec_view_item.lng,
+                rec_view_item.price,
+                rec_view_item.reserve_url,
+                rec_view_item.mobile_reserve_url)))
+    }
+    */
 }

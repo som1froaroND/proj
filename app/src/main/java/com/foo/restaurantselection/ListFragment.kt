@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +35,8 @@ class ListFragment : Fragment(), OnlinRestRecViewAdapter.AdapterListener {
         // Recycler View
         val myrecycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-        myrecycler_view.adapter = OnlinRestRecViewAdapter(this)//= RecViewAdapter(exampleList, this)
+        //myrecycler_view.adapter = OnlinRestRecViewAdapter(this)//= RecViewAdapter(exampleList, this)
+        myrecycler_view.adapter = OnlinRestRecViewAdapter(this)
         myrecycler_view.layoutManager = LinearLayoutManager(context)
 
 /*
@@ -51,6 +53,15 @@ class ListFragment : Fragment(), OnlinRestRecViewAdapter.AdapterListener {
             gotOnlineResList(restaurants, restaurants.size)
         })
 
+        myrecycler_view.initPagination{dir ->
+            if(dir) {
+                mViewModel.nextNumbersRests()
+            } else {
+                mViewModel.prevNumbersRests()
+                Toast.makeText(context, "Page: ${mViewModel.page}.", Toast.LENGTH_LONG).show()
+            }
+        }
+
         return view
     }
 
@@ -65,11 +76,28 @@ class ListFragment : Fragment(), OnlinRestRecViewAdapter.AdapterListener {
             }
             //val item = RecViewItem(drawable, "Item $i", "Line 2")
             val item = RecViewItem(drawable, rest[i].name, rest[i].address)
+            /*
+            val item = RecViewItemRest(drawable,
+                                    rest[i].name,
+                                    rest[i].address,
+                                    rest[i].city,
+                                    rest[i].state,
+                                    rest[i].area,
+                                    rest[i].postal_code,
+                                    rest[i].country,
+                                    rest[i].phone ,
+                                    rest[i].lat,
+                                    rest[i].lng,
+                                    rest[i].price,
+                                    rest[i].reserve_url,
+                                    rest[i].mobile_reserve_url
+                ) // */
             list += item
         }
         return list
     }
-
+    //*/
+/*
     private fun generateDummyList(size: Int): List<RecViewItem> {
         val list = ArrayList<RecViewItem>()
         for (i in 0 until size) {
@@ -83,14 +111,52 @@ class ListFragment : Fragment(), OnlinRestRecViewAdapter.AdapterListener {
         }
         return list
     }
-
+*/
 
     override fun onClick(rec_view_item: Restaurant) {
 
         findNavController().navigate(
-            ListFragmentDirections.actionListFragmentToDetailFragment(
-                RecViewItem(R.drawable.ic_android, rec_view_item.name, rec_view_item.address)
+            ListFragmentDirections.actionListFragmentToDetailFragment(null,
+                rec_view_item, null
             )
         )
+    }
+
+    /*
+    override fun onClick(rec_view_item: Restaurant) {
+
+        findNavController().navigate(
+            ListFragmentDirections.actionListFragmentToDetailFragment(
+                RecViewItemRest(R.drawable.ic_android,
+                    rec_view_item.name,
+                    rec_view_item.address,
+                    rec_view_item.city,
+                    rec_view_item.state,
+                    rec_view_item.area,
+                    rec_view_item.postal_code,
+                    rec_view_item.country,
+                    rec_view_item.phone ,
+                    rec_view_item.lat,
+                    rec_view_item.lng,
+                    rec_view_item.price,
+                    rec_view_item.reserve_url,
+                    rec_view_item.mobile_reserve_url)
+            )
+        )
+    }*/
+
+    private fun RecyclerView.initPagination(paginationCallback: (dir: Boolean) -> Unit = {}) {
+        this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    paginationCallback(true)
+                }
+
+                else if (!recyclerView.canScrollVertically(-1)) {
+                    paginationCallback(false)
+                }
+            }
+        })
     }
 }

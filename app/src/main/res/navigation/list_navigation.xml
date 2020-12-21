@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_profileFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
 
     </fragment>
     <fragment
@@ -38,6 +41,27 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="adatAtadas"
-            app:argType="com.foo.restaurantselection.RecViewItem" />
+            app:argType="com.foo.restaurantselection.RecViewItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="adatAtadRestaurant"
+            app:argType="com.foo.restaurantselection.model.Restaurant"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="adatAtadRest"
+            app:argType="com.foo.restaurantselection.RecViewItemRest"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.foo.restaurantselection.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/action_aboutFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
 </navigation>

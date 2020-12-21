@@ -1,5 +1,7 @@
 package com.foo.restaurantselection.model
 
+import java.io.Serializable
+
 
 data class Restaurant (
 
@@ -19,4 +21,4 @@ data class Restaurant (
     val mobile_reserve_url : String,
     val image_url : String,
 
-    )
+    ): Serializable
