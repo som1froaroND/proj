@@ -45,7 +45,6 @@ class ListFragment : Fragment(), OnlinRestRecViewAdapter.AdapterListener {
         myrecycler_view.adapter = RecViewAdapter(exampleList, this)
         myrecycler_view.layoutManager = LinearLayoutManager(context)
         myrecycler_view.setHasFixedSize(true)
-
 */
         mViewModel.restaurants.observe(viewLifecycleOwner, {restaurants ->
             Log.d("Resp", restaurants.map{it.name}.toString())
